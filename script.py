@@ -12,7 +12,7 @@ response = requests.get(url)
 soup = BeautifulSoup(response.text, "html.parser")
 
 # Find the table on the page that contains the data to be extracted
-table = soup.find("table", {"id": "ctl00_ContentPlaceHolder1_gvOM"})
+table = soup.find("table", {"id": "grdNDSOMReg"})   # ctl00_ContentPlaceHolder1_gvOM 
 
 # Create an Excel workbook to store the extracted data
 workbook = openpyxl.Workbook()
