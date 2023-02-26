@@ -93,7 +93,7 @@ for location in locations:
         # Add the school's data to the list
         data.append({"location": name, "school": school_data})
         next_sibling = next_sibling.find_next_sibling()
-        time.sleep(0.7)
+        time.sleep(0.9)
     
 
 # Convert the data to JSON and write it to a file
