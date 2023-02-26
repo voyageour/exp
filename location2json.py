@@ -1,5 +1,10 @@
 import json
+import requests 
+import time
 from bs4 import BeautifulSoup
+
+url = 'https://geocoder.ca/'
+
 
 # Load the HTML file
 with open("driver_training.html") as file:
@@ -52,20 +57,43 @@ for location in locations:
         training = details[5].text.strip().split(", ")
     #        certification = details[6].text.strip()
 
+
+        print ("mypincode: " + pincode)
+        params = {'locate': pincode, 'json': '2'}
+        response = requests.get(url, params=params)
+
+        # Parse JSON response
+        geoResponse = json.loads(response.text)
+        print (geoResponse)
+        latt = ""
+        longt = ""
+        if geoResponse:    
+            # Extract Dissemination_Area and standard fields
+            longt = geoResponse['longt']
+            latt = geoResponse['latt']
+        else:
+            print (pincode)
+            
+
         # Create a dictionary to store the school's data
         school_data = {
             "name": school_name,
             "address": completeAddress,
             "city": city,
             "pincode": pincode,
+            "latt": latt,
+            "longt": longt,
             "phone": phone,
             "training": training
     #           "certification": certification,
         }
 
+
+
         # Add the school's data to the list
         data.append({"location": name, "school": school_data})
         next_sibling = next_sibling.find_next_sibling()
+        time.sleep(0.7)
     
 
 # Convert the data to JSON and write it to a file
